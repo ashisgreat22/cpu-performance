@@ -1,0 +1,11 @@
+#!/bin/bash
+
+target_governor="performance"
+current_governor=$(cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor | head -n 1)
+if [ "$current_governor" != "$target_governor" ]; then
+    echo "Setting CPU governor to $target_governor"
+    echo "$target_governor" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor > /dev/null
+    echo "Governor has been set to $target_governor" 
+else
+    echo "CPU governor is already set to $target_governor"
+fi
