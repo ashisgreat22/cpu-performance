@@ -19,11 +19,11 @@ Requirements
 
 - [x] Basic functionality
 
-- [ ] AUR-compatible PKGBUILD
+- [x] PKGBUILD for Arch
 
 - [ ] Optional systemd service for automatic application on boot
 
-- [ ] Cleaner handling of privilege escalation (sudo, doas, or root)
+- [x] Cleaner handling of privilege escalation 
 
 ## Disclaimer
 
