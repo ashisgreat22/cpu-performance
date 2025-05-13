@@ -1,0 +1,11 @@
+[Unit]
+Description=Set CPU governor to performance
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cpu-performance
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
