@@ -17,6 +17,12 @@ git clone https://github.com/ashisgreat22/cpu-performance.git
 cd cpu-performance
 makepkg -si
 ```
+## Usage 
+To run the script manually:
+```sudo cpu-performance```
+To enable the systemd service at boot:
+```sudo systemctl enable cpu-performance.service```
+
 ## Requirements
 
 * Linux system with CPU frequency scaling (/sys/devices/system/cpu/cpu*/cpufreq/)
