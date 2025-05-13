@@ -19,8 +19,11 @@ makepkg -si
 ```
 ## Usage 
 To run the script manually:
+
 ```sudo cpu-performance```
+
 To enable the systemd service at boot:
+
 ```sudo systemctl enable cpu-performance.service```
 
 ## Requirements
