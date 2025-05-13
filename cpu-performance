@@ -1,11 +1,26 @@
 #!/bin/bash
 
+# Set default target governor
 target_governor="performance"
+
+# Check if a governor is provided as an argument
+if [ -n "$1" ]; then
+  target_governor="$1"
+  echo "Using governor: $target_governor"
+fi
+
 current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
 
 if [[ $EUID -ne  0 ]]; then 
-   echo "Please run as root"
+   echo "Error: Please run as root"
    exit 1
+fi
+
+# Check if the target governor is available
+if ! cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors | grep -q "$target_governor"; then
+  echo "Governor '$target_governor' not available. Available governors:"
+  cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
+  exit 1
 fi
 
 if [ "$current_governor" != "$target_governor" ]; then
