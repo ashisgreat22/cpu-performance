@@ -14,10 +14,13 @@ if [[ -f /etc/cpu-performance.conf ]]; then
     source /etc/cpu-performance.conf
 fi
 
-# Override with user config if it exists
-if [[ -f "$HOME/.config/cpu-performance.conf" ]]; then
-    source "$HOME/.config/cpu-performance.conf"
+# Try to get the calling user's actual home directory, not root's
+user_home=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+
+if [[ -n "$user_home" && -f "$user_home/.config/cpu-performance.conf" ]]; then
+    source "$user_home/.config/cpu-performance.conf"
 fi
+
 
 # Override with command-line argument if provided
 if [[ -n "$1" ]]; then
