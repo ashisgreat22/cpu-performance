@@ -22,7 +22,7 @@ makepkg -si
 
 1. Download the ```cpu-performance``` file from the latest release
 2. Place the file at /usr/local/bin 
-3. Make it executable: ```chmod +x /usr/local/bin/cpu-performance
+3. Make it executable: ```chmod +x /usr/local/bin/cpu-performance```
 
 (Optional)
 To configure the default target_governor
