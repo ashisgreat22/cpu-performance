@@ -103,7 +103,7 @@ current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
 if [[ "$current_governor" != "$target_governor" ]]; then
     echo "Setting CPU governor to '$target_governor'..."
     for cpu in /sys/devices/system/cpu/cpu[0-9]*; do
-        echo "$target_governor" > "$cpu/cpufreq/scaling_governor"
+        echo "$target_governor" >"$cpu/cpufreq/scaling_governor"
     done
     echo "Governor has been set to '$target_governor'."
 else
