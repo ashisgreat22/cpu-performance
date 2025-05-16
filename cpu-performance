@@ -12,7 +12,7 @@ target_governor="performance"
 # --- Functions ---
 
 show_help() {
-    echo "Usage: $(basename "$0") [governor | --list | --help]"
+    echo "Usage: $(basename "$0") [governor | --list | --active | --help]"
     echo ""
     echo "Sets the CPU scaling governor for all cores."
     echo ""
@@ -21,6 +21,7 @@ show_help() {
     echo "             If not provided, configuration files are checked."
     echo "             Defaults to 'performance' if no config is found."
     echo "  --list     List available CPU governors."
+    echo "  --active   Show the current CPU governor for each core."
     echo "  --help     Show this help message."
     echo ""
     echo "Configuration files (checked in order):"
@@ -31,6 +32,7 @@ show_help() {
     echo "  sudo $(basename "$0") performance"
     echo "  sudo $(basename "$0") powersave"
     echo "  $(basename "$0") --list"
+    echo "  $(basename "$0") --active"
 }
 
 list_governors() {
@@ -41,6 +43,18 @@ list_governors() {
         echo "Error: Cannot read available governors (missing or unreadable)."
         exit 1
     fi
+}
+
+show_active_governors() {
+    echo "Current CPU governors:"
+    for cpu in /sys/devices/system/cpu/cpu[0-9]*; do
+        if [[ -r "$cpu/cpufreq/scaling_governor" ]]; then
+            current_governor=$(cat "$cpu/cpufreq/scaling_governor")
+            echo "  $(basename "$cpu"): $current_governor"
+        else
+            echo "  $(basename "$cpu"): Error reading governor"
+        fi
+    done
 }
 
 # --- Argument Parsing ---
@@ -54,6 +68,12 @@ if [[ "$1" == "--list" ]]; then
     list_governors
     exit 0
 fi
+
+if [[ "$1" == "--active" ]]; then
+    show_active_governors
+    exit 0
+fi
+
 
 # --- Configuration Loading ---
 
